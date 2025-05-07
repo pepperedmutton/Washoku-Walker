@@ -6,7 +6,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node ./src/server.js",
+    "build-client": "cd ../client && npm run build",
     "dev": "nodemon ./src/server.js",
+    "test": "concurrently \"npm run build-client\" \"npm run dev\"",
     "migrate-latest": "knex migrate:latest",
     "migrate-down": "knex migrate:down",
     "seed-data": "knex seed:run",
@@ -24,12 +26,17 @@
   "homepage": "https://github.com/Justin-K-Ellis/Washoku-Walker/issues#readme",
   "dependencies": {
     "@googlemaps/places": "^2.0.1",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
-    "nodemon": "^3.1.10",
     "pg": "^8.15.6"
   },
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.10"
+  }
 }
