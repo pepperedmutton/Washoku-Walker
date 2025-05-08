@@ -12,6 +12,7 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
 
   let [eventLike, setEventLike] = useState(restaurant.like || false);
   let [eventVisit, setEventVisit] = useState(restaurant.visit || false);
+  let [restaurantId] = useState(restaurant.id || "");
 
   const setEventLikeClickHandler = async () => {
     await saveEvent(
