@@ -1,16 +1,33 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
+import UserLocationContext from "./UserLocationContext.tsx";
 import { User } from "./types";
 
 // FIXME: is that bad because global ?
 let myUser = new User();
-
 const UserContext = createContext(myUser);
 
 export function ContextProvider({children}: any) {
+
+    const [lat, setLat] = useState<number | null>(null);
+    const [log, setLog] = useState<number | null>(null);
+    const userLoc = {lat, log};
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLat(position.coords.latitude);
+          setLog(position.coords.longitude);
+        },
+        (error) => {
+          console.error("Error when trying to get location.", error);
+        }
+    );
+
     return (
-        <UserContext.Provider value={myUser}>
-            {children}
-        </UserContext.Provider>
+        <UserLocationContext.Provider value={userLoc}>
+            <UserContext.Provider value={myUser}>
+                {children}
+            </UserContext.Provider>
+        </UserLocationContext.Provider>
     )
 }
 
