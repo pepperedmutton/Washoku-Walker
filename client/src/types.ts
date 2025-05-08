@@ -4,7 +4,8 @@ type DisplayMode =
   | "userSelection"
   | "login"
   | "userProfile"
-  | "aboutPage";
+  | "aboutPage"
+  | "signUp" ;
 
 interface ViewPropsInterface {
   view: DisplayMode;

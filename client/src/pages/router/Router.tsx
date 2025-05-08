@@ -7,6 +7,7 @@ import Login from "../login/Login.tsx";
 import UserProfile from "../user-profile/UserProfile.tsx";
 import AboutPage from "../about-page/AboutPage.tsx";
 import NotFound from "../404/404.tsx";
+import Signup from "../Signup/signup.tsx";
 
 export default function Router({ view, setView }: ViewPropsInterface) {
   switch (view) {
@@ -21,6 +22,9 @@ export default function Router({ view, setView }: ViewPropsInterface) {
 
     case "login":
       return <Login setView={setView} />;
+
+    case "signUp":
+      return <Signup setView={setView} />;
 
     case "userProfile":
       return <UserProfile />;

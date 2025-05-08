@@ -8,6 +8,7 @@ export default function Header({ setView }: SetViewPropsInterface) {
       <nav className="nav">
         <div onClick={() => setView("aboutPage")}>About</div>
         <div onClick={() => setView("login")}>Login</div>
+        <div onClick={() => setView("signUp")}>Signup</div>
       </nav>
     </header>
   );
