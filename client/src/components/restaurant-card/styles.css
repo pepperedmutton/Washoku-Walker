@@ -25,3 +25,14 @@ p {
 .address {
   font-size: 0.9rem;
 }
+
+.links {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.event-icon {
+  text-decoration: none;
+}

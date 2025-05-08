@@ -14,7 +14,7 @@ byDishAndAreaController.get("/", async (req, res) => {
     if (Array.isArray(places)) {
       res.json(places.slice(0, 5));
     }
-    console.error("attempted to fetch from google api:", places);
+    // console.error("attempted to fetch from google api:", places);
     res.status(500);
     res.end();
   } catch (error) {

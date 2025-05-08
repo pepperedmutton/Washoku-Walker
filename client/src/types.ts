@@ -7,6 +7,11 @@ type DisplayMode =
   | "aboutPage"
   | "signUp" ;
 
+enum PlaceEventType {
+  like = "like",
+  visit = "visit",
+}
+
 interface ViewPropsInterface {
   view: DisplayMode;
   setView: (mode: DisplayMode) => void;
@@ -22,6 +27,9 @@ interface Restaurant {
   address: string;
   url: string;
   openNow: boolean;
+  id: string;
+  visit: boolean;
+  like: boolean;
 }
 
 interface Cuisine {
@@ -46,4 +54,8 @@ export type {
   Restaurant,
   Cuisine,
   UserLocation,
+};
+
+export {
+  PlaceEventType,
 };
