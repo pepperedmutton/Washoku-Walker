@@ -1,8 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import placeEventsModel from './events.model.js';
+
 const fieldMask =
-  "places.displayName,places.rating,places.formattedAddress,places.websiteUri,places.regularOpeningHours.openNow";
+  "places.id,places.displayName,places.rating,places.formattedAddress,places.websiteUri,places.regularOpeningHours.openNow";
 
 // This is for users who aren't sure what they want and need restaurant
 // recommendations near them.
@@ -56,14 +58,29 @@ async function getRestaurantsByDishAndArea(dish, area) {
 }
 
 // Helper function
-function processPlaces(rawPlaces) {
+async function processPlaces(rawPlaces) {
+
+  const events = await placeEventsModel.getEvents(1);
+
   const places = (rawPlaces.places || []).map((place) => {
+    let foundPlaceEvents = {};
+
+    events.map( event => {
+      if (event.placeId === place.id) {
+        foundPlaceEvents[event.name] = true;
+      }
+    });
+
     return {
-      name: (place.displayName || {}).text ?? "noName",
-      rating: place.rating,
-      address: place.formattedAddress,
-      url: place.websiteUri,
-      openNow: (place.regularOpeningHours || {}).openNow,
+      ...{
+        name: (place.displayName || {}).text ?? "noName",
+        rating: place.rating,
+        address: place.formattedAddress,
+        url: place.websiteUri,
+        openNow: (place.regularOpeningHours || {}).openNow,
+        id: place.id,
+      }, 
+      ...foundPlaceEvents
     };
   });
 
