@@ -8,6 +8,8 @@ import knex from "./knex.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import signupRouter from "./controllers/signupRouter.js";
+import authMiddleware from "./auth.js";
+import saveRouter from "./controllers/saveRouter.js";
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,6 +34,8 @@ app.get("/api/test", (req, res) => {
   res.json({ ok: true, message: "testing" });
 });
 app.use("/api/signup",signupRouter)
+
+//Login API
 app.post("/api/login", async (req, res) => {
   let{email,password} = req.body;
     console.log(req.body);
@@ -41,7 +45,10 @@ app.post("/api/login", async (req, res) => {
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if(isMatch){
+    delete user.password;
     const token = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
+    console.log(token);
+    console.log(jwt.verify(token,JWT_SECRET))
     return res.json({
       resultMessage: 'success',
       resultCode: 1,
@@ -50,7 +57,10 @@ app.post("/api/login", async (req, res) => {
       }
     res.status(401).json({ success: false, message: 'Invalid credentials' });
 });
-app.use("/api/restaurant", router);
+//Restaurant api,used for getting restaurant from google map api with certain criteria
+app.use("/api/restaurant",authMiddleware,router);
+//Save API, accept placeID and save it to the user
+app.use("/api/save/:placeID",authMiddleware,saveRouter);
 
 app.listen(port, () => {
   const url = `http://localhost:${port}`;
