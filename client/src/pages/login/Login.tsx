@@ -1,13 +1,15 @@
-import { SetViewPropsInterface} from "../../types";
+import { LoginPropsInterface } from "../../types";
 import './styles.css';
 import {useState} from "react";
-export default function Login({ setView }: SetViewPropsInterface) {
+
+export default function Login({ setView, setJwtToken }: LoginPropsInterface) {
+  const url = import.meta.env.VITE_LOGIN;
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState("");
   const handleLogin = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/login", {
+      const res = await fetch(`${url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email,password })
@@ -21,8 +23,8 @@ export default function Login({ setView }: SetViewPropsInterface) {
       } else {
         // Login succeeded
         setErrorMsg("");
-        console.log("Success:", data)
-        setView("userProfile");
+        setJwtToken(data.token);
+        setView("landingPage");
       }
     } catch (err) {
       setErrorMsg(errorMsg);
