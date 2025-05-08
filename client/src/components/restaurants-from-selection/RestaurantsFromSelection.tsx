@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Restaurant } from "../../types";
 import RestaurantCard from "../restaurant-card/RestaurantCard";
+import { getUserContext } from "../../ContextProvider";
 
 interface SelectionProps {
   chosenCuisine: string;
@@ -15,6 +16,7 @@ export default function RestaurantsFromSelection({
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const url = import.meta.env.VITE_BY_DISH_AREA;
+  const user = getUserContext();
 
   useEffect(() => {
     getRestaurants();
@@ -23,8 +25,13 @@ export default function RestaurantsFromSelection({
   async function getRestaurants() {
     try {
       const response = await fetch(
-        `${url}?dish=${chosenCuisine || "pizza"}&area=${chosenWard}`
+        `${url}?dish=${chosenCuisine || "pizza"}&area=${chosenWard}`, {
+          headers: {
+            Authorization: user.getToken()
+          }
+        }
       );
+
       const data = await response.json();
       if (response.ok) {
         setRestaurants(data);

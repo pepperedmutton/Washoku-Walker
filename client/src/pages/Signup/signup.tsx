@@ -1,14 +1,15 @@
 import { SetViewPropsInterface} from "../../types";
 import "./styles.css";
-import {useState} from "react";
+import { useState } from "react";
 export default function Signup({ setView }: SetViewPropsInterface) {
+  const url = import.meta.env.VITE_SIGNUP;
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState("");
   const handleLogin = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/signup", {
+      const res = await fetch(`${url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email,password,name})

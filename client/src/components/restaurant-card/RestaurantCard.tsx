@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Restaurant, PlaceEventType } from "../../types";
 import "./styles.css";
+import { getUserContext } from "../../ContextProvider";
 
 interface RestaurantCardProps {
   restaurant: Restaurant;
@@ -12,7 +13,7 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
 
   let [eventLike, setEventLike] = useState(restaurant.like || false);
   let [eventVisit, setEventVisit] = useState(restaurant.visit || false);
-  let [restaurantId] = useState(restaurant.id || "");
+  const user = getUserContext();
 
   const setEventLikeClickHandler = async () => {
     await saveEvent(
@@ -36,7 +37,10 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
       const response = await fetch(
         `${url}/${restaurantId}/${eventName}`,
         { 
-          method: state ? "post" : "delete"
+          method: state ? "post" : "delete",
+          headers: {
+            Authorization: user.getToken()
+          }
         }
       );
 

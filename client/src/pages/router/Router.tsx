@@ -1,5 +1,4 @@
 import { RouterPropsInterface } from "../../types.ts";
-
 import LandingPage from "../landing-page/LandingPage.tsx";
 import Recommendations from "../recommendations/Recommendations.tsx";
 import UserSelection from "../user-selection/UserSelection.tsx";
@@ -9,17 +8,22 @@ import AboutPage from "../about-page/AboutPage.tsx";
 import NotFound from "../404/404.tsx";
 import Signup from "../Signup/signup.tsx";
 import Logout from "../logout/Logout.tsx";
+import { getUserContext } from "../../ContextProvider.tsx";
 
-export default function Router({ view, setView, jwtToken, setJwtToken }: RouterPropsInterface) {
+export default function Router({ view, setView}: RouterPropsInterface) {
+
+  let user = getUserContext();
+
+  console.log("inside router: ", user.toString());
 
   // allow some public page to be viewed as anonymous
   if (["signUp", "aboutPage"].indexOf(view) < 0) {
-    if (jwtToken.length === 0) view="login";
+    if (!user.isLogged()) view="login";
   }
 
   switch (view) {    
     case "landingPage":
-      return <LandingPage jwtToken={jwtToken} setView={setView} />;
+      return <LandingPage setView={setView} />;
       
     case "recommendations":
       return <Recommendations />;
@@ -28,16 +32,16 @@ export default function Router({ view, setView, jwtToken, setJwtToken }: RouterP
       return <UserSelection />;
           
     case "login":
-      return <Login setJwtToken={setJwtToken} setView={setView} />;
+      return <Login setView={setView} />;
 
     case "logout":
-      return <Logout setJwtToken={setJwtToken} setView={setView} />;
+      return <Logout setView={setView} />;
   
     case "signUp":
-      return <Signup jwtToken={jwtToken} setView={setView} />;
+      return <Signup setView={setView} />;
 
     case "userProfile":
-      return <UserProfile jwtToken={jwtToken}/>;
+      return <UserProfile />;
 
     case "aboutPage":
       return <AboutPage />;

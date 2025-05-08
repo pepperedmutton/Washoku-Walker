@@ -1,12 +1,15 @@
 import { LoginPropsInterface } from "../../types";
 import './styles.css';
-import {useState} from "react";
+import { useState } from "react";
+import { getUserContext } from "../../ContextProvider";
 
-export default function Login({ setView, setJwtToken }: LoginPropsInterface) {
+export default function Login({ setView }: LoginPropsInterface) {
   const url = import.meta.env.VITE_LOGIN;
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState("");
+  const user = getUserContext();
+
   const handleLogin = async () => {
     try {
       const res = await fetch(`${url}`, {
@@ -23,7 +26,9 @@ export default function Login({ setView, setJwtToken }: LoginPropsInterface) {
       } else {
         // Login succeeded
         setErrorMsg("");
-        setJwtToken(data.token);
+        user.setToken(data.token);
+        user.setName("frédéric beuserie");
+        console.log("before setView: ", user.toString());
         setView("landingPage");
       }
     } catch (err) {

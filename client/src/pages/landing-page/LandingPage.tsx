@@ -1,7 +1,7 @@
 import { SetViewPropsInterface } from "../../types";
 import "./styles.css";
 
-export default function LandingPage({ setView, jwtToken }: SetViewPropsInterface) {
+export default function LandingPage({ setView }: SetViewPropsInterface) {
   return (
     <section>
       <h1 className="page-title">What are you looking for?</h1>

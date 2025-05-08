@@ -3,20 +3,27 @@ import { useState, useEffect } from "react";
 import RestaurantsFromSelection from "../../components/restaurants-from-selection/RestaurantsFromSelection.tsx";
 import tokyoWards from "../../tokyoWards.ts";
 import { Cuisine } from "../../types.ts";
+import { getUserContext } from "../../ContextProvider.tsx";
 
 export default function UserSelection() {
   const [cuisineTypes, setCusinesType] = useState<Cuisine[] | null>(null);
   const [chosenCuisine, setChosenCuisine] = useState<string>("");
   const [chosenWard, setChosenWard] = useState<string>(tokyoWards[0]);
   const url = import.meta.env.VITE_CUISINE_TYPES;
+  const user = getUserContext();
 
   useEffect(() => {
     getCusineTypes();
   }, []);
 
   async function getCusineTypes() {
+
     try {
-      const response = await fetch(url);
+      const response = await fetch(url,{
+        headers: {
+          Authorization: user.getToken()
+        }
+      });
       const data = await response.json();
       setCusinesType(data);
     } catch (error) {

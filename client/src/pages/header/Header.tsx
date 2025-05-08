@@ -1,13 +1,16 @@
 import "./styles.css";
 import { SetViewPropsInterface } from "../../types";
+import { getUserContext } from "../../ContextProvider";
 
-export default function Header({ jwtToken, setView }: SetViewPropsInterface) {
+export default function Header({ setView }: SetViewPropsInterface) {
+  const user = getUserContext();
+
   return (
     <header className="header">
       <h1 onClick={() => setView("landingPage")}>Washoku Walker</h1>
       <nav className="nav">
         <div onClick={() => setView("aboutPage")}>About</div>
-        { jwtToken.length > 0 
+        { user.isLogged() 
           ?
             <div onClick={() => setView("logout")}>Logout</div>
           :

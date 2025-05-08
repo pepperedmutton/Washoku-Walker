@@ -21,29 +21,19 @@ interface ViewPropsInterface {
 
 interface SetViewPropsInterface {
   setView: (mode: DisplayMode) => void;
-  jwtToken: String;
 }
 
 interface RouterPropsInterface {
-  jwtToken: String;
-  setJwtToken: (token: String) => void;
   view: DisplayMode;
   setView: (mode: DisplayMode) => void;
 }
 
 interface LoginPropsInterface {
-  setJwtToken: (token: String) => void;
   setView: (mode: DisplayMode) => void;
 }
 
 interface LogoutPropsInterface {
-  setJwtToken: (token: String) => void;
   setView: (mode: DisplayMode) => void;
-}
-
-interface UserProfilePropsInterface {
-  jwtToken: String;
-  // setView: (mode: DisplayMode) => void;
 }
 
 interface Restaurant {
@@ -72,9 +62,45 @@ interface UserLocation {
   log: number | null;
 }
 
-interface UserAuthentication {
-  jwtToken: String | null;
-  name: String | null;
+// interface IUser {
+//   jwtToken: String | null;
+//   name: String | null;
+// }
+
+class User {
+  constructor (private jwtToken: string|null = null, private name: string|null = null) {
+    this.jwtToken=jwtToken;
+    this.name=name;
+  }
+
+  setToken(token: string) {
+    this.jwtToken = token;
+  }
+
+  setName(name: string) {
+    this.name = name;
+  }
+
+  getName(): string|null {
+    return this.name;
+  }
+
+  getToken(): string {
+    if (this.jwtToken === null) return ""
+    return this.jwtToken;
+  }
+
+  isLogged(): boolean {
+    return this.jwtToken ? true : false;
+  }
+
+  logout(): void {
+    this.jwtToken = null;
+  }
+
+  toString(): String {
+    return `name: ${this.name}, isLogged: ${this.isLogged()}, token (redacted): ${this.jwtToken?.substring(1,10)}`;
+  }
 }
 
 export type {
@@ -84,13 +110,14 @@ export type {
   Restaurant,
   Cuisine,
   UserLocation,
-  UserAuthentication,
   LoginPropsInterface,
   LogoutPropsInterface,
   RouterPropsInterface,
-  UserProfilePropsInterface,
+  // IUser,
 };
 
+// Class objects
 export {
   PlaceEventType,
+  User,
 };
