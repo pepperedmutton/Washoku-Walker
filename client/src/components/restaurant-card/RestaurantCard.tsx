@@ -70,11 +70,6 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
         <div>
           <a href={restaurant.url}>Link</a>
         </div>
-        <div >
-            <a className="event-icon" href="#/" onClick={ setEventVisitClickHandler }>{eventVisit ? "🚙" : "🤔"}</a>
-            <a className="event-icon" href="#/" onClick={ setEventLikeClickHandler }>{ eventLike ? "❤️" : "🩶"}</a>
-            <a className="event-icon" href="#/" onClick={ setEventPinClickHandler }>{ eventPin ? "📍" : "📌"}</a>
-        </div>
       </div>
     </div>
   );
