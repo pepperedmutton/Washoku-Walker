@@ -4,7 +4,6 @@ import { Restaurant } from "../../types";
 
 export default function Recommendations() {
   const url = import.meta.env.VITE_RECOM;
-  console.log(url);
   const [restaurants, isError, isLoading] = useFetchRestaurants(url);
 
   if (isError) return <h1>Something went wrong.</h1>;
