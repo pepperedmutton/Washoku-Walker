@@ -7,9 +7,5 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, '../server/public'),
     emptyOutDir: true,
-  },
-  server: {
-    proxy: {
-      '/api': 'http://localhost:8000',
-    }}
+  }
 })
