@@ -11,7 +11,8 @@ const saveRouter = express.Router();
 saveRouter.post('/', async (req, res) => {
   const placeId = req.params.placeID;
   const token = req.headers.Authorization;
-  const user = jwt.verify(token, secret)
+  const user = jwt.verify(token, secret).id;
+  
 });
 
 export default saveRouter;

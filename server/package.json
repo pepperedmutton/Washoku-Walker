@@ -8,7 +8,7 @@
     "start": "node ./src/server.js",
     "build-client": "cd ../client && npm run build",
     "dev": "nodemon ./src/server.js",
-    "test": "concurrently \"npm run build-client\" \"npm run dev\"",
+    "test": "concurrently \"npm run build\" \"npm run dev\"",
     "migrate-latest": "knex migrate:latest",
     "migrate-down": "knex migrate:down",
     "seed-data": "knex seed:run",
