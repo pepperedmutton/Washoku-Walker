@@ -21,7 +21,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "secret"
 const app = express();
 const port = process.env.PORT || 8000;
 
-app.use(express.static("../client/dist"));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../client/dist')));
