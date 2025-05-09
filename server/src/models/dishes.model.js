@@ -12,6 +12,7 @@ async function getAll() {
       "localRanking",
       "internationalRanking"
     )
+    
     .from("dish")
     .orderBy("name", "asc");
   return dishes;
