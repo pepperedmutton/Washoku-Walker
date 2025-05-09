@@ -12,7 +12,7 @@
     "migrate-latest": "knex migrate:latest",
     "migrate-down": "knex migrate:down",
     "seed-data": "knex seed:run",
-    "build": "cd ../client && npm install && npm run build"
+    "build": "cd ../client && npm install && npm run build &&cd ../server && npm install"
   },
   "repository": {
     "type": "git",
