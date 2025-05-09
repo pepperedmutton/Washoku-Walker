@@ -20,16 +20,16 @@ export default function Signup({ setView }: SetViewPropsInterface) {
       if (!res.ok) {
         // If server responds with a code and error message
         setErrorMsg(data.message || "Unknown error");
-        console.log(errorMsg);
+        // console.log(errorMsg);
       } else {
         // Login succeeded
         setErrorMsg("");
-        console.log("Success:", data)
+        // console.log("Success:", data)
         setView("userProfile");
       }
     } catch (err) {
       setErrorMsg(errorMsg);
-      console.log(errorMsg);
+      // console.log(errorMsg);
     }
   };
   return (

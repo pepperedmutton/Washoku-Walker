@@ -7,6 +7,8 @@ import path from 'path';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 const JWT_SECRET = process.env.JWT_SECRET;
+console.log(JWT_SECRET);
+
 
 export default function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;

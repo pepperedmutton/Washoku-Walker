@@ -2,13 +2,15 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import placeEventsModel from './events.model.js';
+import { getSymbolByTitle } from 'unicode-lookup';
 
 const fieldMask =
-  "places.id,places.displayName,places.rating,places.formattedAddress,places.websiteUri,places.regularOpeningHours.openNow";
+  "places.id,places.displayName,places.rating,places.formattedAddress,places.websiteUri,places.regularOpeningHours.openNow,places.servesBeer,places.servesBreakfast,places.servesBrunch,places.servesCocktails,places.servesCoffee,places.servesDessert,places.servesDinner,places.servesLunch,places.servesVegetarianFood,places.servesWine,places.generativeSummary";
+
 
 // This is for users who aren't sure what they want and need restaurant
 // recommendations near them.
-async function getRecommendedRestaurants(locationData) {
+async function getRecommendedRestaurants(user, locationData) {
   const url = "https://places.googleapis.com/v1/places:searchNearby";
   const response = await fetch(url, {
     method: "post",
@@ -33,7 +35,8 @@ async function getRecommendedRestaurants(locationData) {
   });
 
   const data = await response.json();
-  return processPlaces(data);
+  // console.log("User2 is: ", user);
+  return processPlaces(user, data);
 }
 
 // This is for user who want to eat a specific kind of food in a specific area.
@@ -65,11 +68,26 @@ async function processPlaces(user, rawPlaces) {
   const places = (rawPlaces.places || []).map((place) => {
     let foundPlaceEvents = {};
 
+    // console.log(place);
+
     events.map( event => {
       if (event.placeId === place.id) {
         foundPlaceEvents[event.name] = true;
       }
     });
+
+    let servesFeatures = [];
+    Object.keys(place).map( 
+      (key) => {
+        if (place[key] === true && key.startsWith('serves')) {
+          let word = key.substring(6);
+          // FIXME: not working
+          const symbol = getSymbolByTitle(word[0].toUpperCase()+word.substring(1));
+          servesFeatures.push(symbol);
+        }
+      }
+    );
+    // console.log(place.generativeSummary);
 
     return {
       ...{
@@ -79,6 +97,9 @@ async function processPlaces(user, rawPlaces) {
         url: place.websiteUri,
         openNow: (place.regularOpeningHours || {}).openNow,
         id: place.id,
+        servesFeatures: servesFeatures,
+        // FIXME: looks it's not available ...
+        generativeSummary: place.generativeSummary
       }, 
       ...foundPlaceEvents
     };
