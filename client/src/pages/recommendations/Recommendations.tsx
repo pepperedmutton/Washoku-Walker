@@ -9,7 +9,7 @@ export default function Recommendations() {
 
   if (isError) return <h1>Something went wrong.</h1>;
   if (isLoading) return <p>Loading...</p>;
-  console.log(restaurants);
+  // console.log(restaurants);
 
   if (restaurants !== null) {
     return (

@@ -39,7 +39,7 @@ app.use("/api/signup",signupRouter)
 //Login API
 app.post("/api/login", async (req, res) => {
   let{email,password} = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     const user = await knex('users').where({ email }).first();
     if (!user) {
             return res.status(401).json({ message: 'Invalid email or password' });
@@ -48,8 +48,8 @@ app.post("/api/login", async (req, res) => {
     if(isMatch){
     delete user.password;
     const token = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
-    console.log(token);
-    console.log(jwt.verify(token,JWT_SECRET))
+    // console.log(token);
+    // console.log(jwt.verify(token,JWT_SECRET))
     return res.json({
       resultMessage: 'success',
       resultCode: 1,

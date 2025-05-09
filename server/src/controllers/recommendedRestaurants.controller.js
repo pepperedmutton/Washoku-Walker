@@ -7,8 +7,8 @@ recommendationController.post("/", async (req, res) => {
   const { lat, log } = req.body;
 
   try {
-    const places = await getRecommendedRestaurants({ lat, log });
-    console.log(places);
+    const places = await getRecommendedRestaurants(req.user, { lat, log });
+    // console.log(places);
     res.json(places);
   } catch (error) {
     console.error("caught error in recommended restaurants controller:", error);

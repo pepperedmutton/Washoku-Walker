@@ -33,6 +33,6 @@ export function ContextProvider({children}: any) {
 
 export function getUserContext() {
     let uc = useContext(UserContext);
-    console.log("getUserContext: ", uc.toString());
+    // console.log("getUserContext: ", uc.toString());
     return uc;
 }

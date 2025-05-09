@@ -14,7 +14,7 @@ export default function Router({ view, setView}: RouterPropsInterface) {
 
   let user = getUserContext();
 
-  console.log("inside router: ", user.toString());
+  // console.log("inside router: ", user.toString());
 
   // allow some public page to be viewed as anonymous
   if (["signUp", "aboutPage"].indexOf(view) < 0) {

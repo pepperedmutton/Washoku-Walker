@@ -70,6 +70,8 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
       <p>Rating: {restaurant.rating}</p>
       <p>{restaurant.openNow ? "Currently Open" : "Not open yet"}</p>
       <p className="address">{restaurant.address}</p>
+      <p>Serves: {restaurant.servesFeatures.join(",")}</p>
+      <p>{restaurant.generativeSummary}</p>
       <div className="links">
         <div>
           <a href={restaurant.url}>Link</a>

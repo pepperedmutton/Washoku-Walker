@@ -47,6 +47,8 @@ interface Restaurant {
   visit: boolean;
   like: boolean;
   pin: boolean;
+  servesFeatures: Array<string>;
+  generativeSummary: string;
 }
 
 interface Cuisine {
