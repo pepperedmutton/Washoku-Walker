@@ -12,14 +12,14 @@ export default function RestaurantsFromSelection({
   chosenCuisine,
   chosenWard,
 }: SelectionProps) {
-  const [restaurants, setRestaurants] = useState<Restaurant[] | null>(null);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const url = import.meta.env.VITE_BY_DISH_AREA;
   const user = getUserContext();
 
   useEffect(() => {
-    getRestaurants();
+     getRestaurants();
   }, [chosenCuisine, chosenWard]);
 
   async function getRestaurants() {
@@ -47,7 +47,7 @@ export default function RestaurantsFromSelection({
 
   if (isError) return <h3 className="sub-heading">Something went wrong</h3>;
   if (isLoading) return <h3 className="sub-heading">Loading...</h3>;
-
+console.log(restaurants);
   return (
     <section className="card-display">
       {restaurants?.map((rest: Restaurant,i) => {try {
