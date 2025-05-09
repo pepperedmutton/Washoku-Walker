@@ -6,9 +6,7 @@ import bcrypt from 'bcrypt';
 import path from 'path';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-dotenv.config({ path: '../.env' });
 const JWT_SECRET = process.env.JWT_SECRET;
-console.log(JWT_SECRET);
 
 export default function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
