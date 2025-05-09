@@ -50,9 +50,12 @@ export default function RestaurantsFromSelection({
 
   return (
     <section className="card-display">
-      {restaurants?.map((rest: Restaurant) => (
-        <RestaurantCard key={rest.name} restaurant={rest} />
-      ))}
+      {restaurants?.map((rest: Restaurant,i) => {try {
+    return <RestaurantCard key={rest.name || i} restaurant={rest} />;
+  } catch (err) {
+    console.error("Failed to render restaurant:", rest, err);
+    return null;
+  }})}
     </section>
   );
 }
