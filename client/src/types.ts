@@ -11,6 +11,7 @@ type DisplayMode =
 enum PlaceEventType {
   like = "like",
   visit = "visit",
+  pin = "pin",
 }
 
 interface ViewPropsInterface {
@@ -45,6 +46,7 @@ interface Restaurant {
   id: string;
   visit: boolean;
   like: boolean;
+  pin: boolean;
 }
 
 interface Cuisine {

@@ -13,6 +13,7 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
 
   let [eventLike, setEventLike] = useState(restaurant.like || false);
   let [eventVisit, setEventVisit] = useState(restaurant.visit || false);
+  let [eventPin, setEventPin] = useState(restaurant.pin || false);
   const user = getUserContext();
 
   const setEventLikeClickHandler = async () => {
@@ -29,6 +30,14 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
       restaurant.id,
       eventVisit=== false ? true : false,
       setEventVisit);
+  }
+
+  const setEventPinClickHandler = async () => {
+    await saveEvent(
+      PlaceEventType.pin,
+      restaurant.id,
+      eventPin === false ? true : false,
+      setEventPin);
   }
 
   async function saveEvent(eventName: PlaceEventType, restaurantId: string, state: Boolean, success: Function): Promise<void> {
@@ -68,6 +77,7 @@ export default function RestaurantCard({ restaurant }: RestaurantCardProps) {
         <div >
             <a className="event-icon" href="#/" onClick={ setEventVisitClickHandler }>{eventVisit ? "🚙" : "🤔"}</a>
             <a className="event-icon" href="#/" onClick={ setEventLikeClickHandler }>{ eventLike ? "❤️" : "🩶"}</a>
+            <a className="event-icon" href="#/" onClick={ setEventPinClickHandler }>{ eventPin ? "📍" : "📌"}</a>
         </div>
       </div>
     </div>
