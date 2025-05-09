@@ -13,10 +13,16 @@
   font-family: "Reggae One", system-ui;
   font-size: 2rem;
   font-weight: 700;
+  cursor: pointer;
+}
+
+.header-right {
+  
 }
 
 .nav {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+  cursor: pointer;
 }

@@ -43,12 +43,14 @@ export default function Login({ setView }: LoginPropsInterface) {
         id="username"
         type="text"
         value = {email}
+        placeholder="Please enter Email"
         onChange={(e)=>setEmail(e.target.value)}
       />
       <input
         id="password"
-        type="text"
+        type="password"
         value = {password}
+        placeholder="Please enter Password"
         onChange={(e)=>setPassword(e.target.value)}
       />
     </div>

@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 import UserLocationContext from "./UserLocationContext.tsx";
 import { User } from "./types";
 
-// FIXME: is that bad because global ?
+// FIXME: is that bad because global ? should we use useEffect ?
 let myUser = new User();
 const UserContext = createContext(myUser);
 
