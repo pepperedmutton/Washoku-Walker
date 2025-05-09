@@ -1,6 +1,6 @@
 import knex from "../knex.js";
 
-async function getEvents() {
+async function getEvents(user) {
   const events = await knex
     .select(
       "uuid",
@@ -10,18 +10,18 @@ async function getEvents() {
       "updatedAt",
     )
     .from("placeEvent")
-    .where("userId","=",1)
+    .where("userId","=", user.id)
     .orderBy("updatedAt", "desc");
   return events;
 }
 
-async function addEvent(placeId, eventName) {
+async function addEvent(placeId, user, eventName) {
   const result = await knex
     .insert(
       {
         "name": eventName,
         "placeId": placeId,
-        "userId": 1
+        "userId": user.id
       }
      )
      .into("placeEvent");
@@ -30,12 +30,12 @@ async function addEvent(placeId, eventName) {
 }
 
 // FIXME: return void => throw an error ?
-async function deleteEvent(placeId, eventName) {
+async function deleteEvent(placeId, user, eventName) {
   const result = await knex
     .table("placeEvent")
     .where("placeId", "=", placeId)
     .andWhere("name", "=", eventName)
-    .andWhere("userId", "=", 1)
+    .andWhere("userId", "=", user.id)
     .del();
 
     if (result === 0) throw(new Error("NotFound"));

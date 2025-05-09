@@ -10,7 +10,7 @@ byDishAndAreaController.get("/", async (req, res) => {
     return res.json({ error: "Please send valid dish and area query params." });
   }
   try {
-    const places = await getRestaurantsByDishAndArea(dish, area);
+    const places = await getRestaurantsByDishAndArea(req.user, dish, area);
     if (Array.isArray(places)) {
       res.json(places.slice(0, 5));
     }

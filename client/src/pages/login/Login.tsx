@@ -27,8 +27,7 @@ export default function Login({ setView }: LoginPropsInterface) {
         // Login succeeded
         setErrorMsg("");
         user.setToken(data.token);
-        user.setName("frédéric beuserie");
-        console.log("before setView: ", user.toString());
+        user.setName(data.name);
         setView("landingPage");
       }
     } catch (err) {

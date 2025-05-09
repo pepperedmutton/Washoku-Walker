@@ -37,7 +37,7 @@ async function getRecommendedRestaurants(locationData) {
 }
 
 // This is for user who want to eat a specific kind of food in a specific area.
-async function getRestaurantsByDishAndArea(dish, area) {
+async function getRestaurantsByDishAndArea(user, dish, area) {
   const url = "https://places.googleapis.com/v1/places:searchText";
   const response = await fetch(url, {
     method: "post",
@@ -52,15 +52,15 @@ async function getRestaurantsByDishAndArea(dish, area) {
   });
   const data = await response.json();
   if (data.places) {
-    return processPlaces(data);
+    return processPlaces(user, data);
   }
   console.error(data);
 }
 
 // Helper function
-async function processPlaces(rawPlaces) {
+async function processPlaces(user, rawPlaces) {
 
-  const events = await placeEventsModel.getEvents(1);
+  const events = await placeEventsModel.getEvents(user);
 
   const places = (rawPlaces.places || []).map((place) => {
     let foundPlaceEvents = {};

@@ -52,6 +52,7 @@ app.post("/api/login", async (req, res) => {
     return res.json({
       resultMessage: 'success',
       resultCode: 1,
+      name: user.name,
       token
     });
       }

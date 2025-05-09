@@ -8,7 +8,7 @@ eventsController.post("/:placeId/:eventName", async (_req, res) => {
     let placeId = _req.params.placeId;
     let eventName = _req.params.eventName;
 
-    await eventsModel.addEvent(placeId, eventName);
+    await eventsModel.addEvent(placeId, _req.user, eventName);
 
     res.status(200);
     
@@ -28,7 +28,7 @@ eventsController.delete("/:placeId/:eventName", async (_req, res) => {
     let placeId = _req.params.placeId;
     let eventName = _req.params.eventName;
 
-    await eventsModel.deleteEvent(placeId, eventName);
+    await eventsModel.deleteEvent(placeId, _req.user, eventName);
     res.status(200);
 
   } catch (error) {
